@@ -24,7 +24,7 @@ export default function ShareButtons({ url, title, description }: ShareButtonsPr
     <div className="flex items-center space-x-3">
       <span className="text-sm font-semibold text-gray-700">Share:</span>
       
-      <FacebookShareButton url={shareUrl} quote={title}>
+      <FacebookShareButton url={shareUrl} hashtag="#news">
         <FacebookIcon size={32} round className="hover:opacity-80 transition" />
       </FacebookShareButton>
 
@@ -32,11 +32,11 @@ export default function ShareButtons({ url, title, description }: ShareButtonsPr
         <TwitterIcon size={32} round className="hover:opacity-80 transition" />
       </TwitterShareButton>
 
-      <LinkedinShareButton url={shareUrl} title={title} summary={description}>
+      <LinkedinShareButton url={shareUrl} title={title}>
         <LinkedinIcon size={32} round className="hover:opacity-80 transition" />
       </LinkedinShareButton>
 
-      <WhatsappShareButton url={shareUrl} title={title}>
+      <WhatsappShareButton url={shareUrl} title={title} separator=" - ">
         <WhatsappIcon size={32} round className="hover:opacity-80 transition" />
       </WhatsappShareButton>
     </div>
