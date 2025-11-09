@@ -25,28 +25,28 @@ const merriweather = Merriweather({
 
 export const metadata: Metadata = {
   title: {
-    default: 'NewsHub - Your Source for Breaking News',
-    template: '%s | NewsHub',
+    default: 'Pulse LS - Your Source for Breaking News',
+    template: '%s | Pulse LS',
   },
   description: 'Stay informed with the latest news, in-depth analysis, and compelling stories from around the world.',
   keywords: ['news', 'breaking news', 'world news', 'politics', 'business', 'technology'],
-  authors: [{ name: 'NewsHub' }],
-  creator: 'NewsHub',
-  publisher: 'NewsHub',
+  authors: [{ name: 'Pulse LS' }],
+  creator: 'Pulse LS',
+  publisher: 'Pulse LS',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    siteName: 'NewsHub',
-    title: 'NewsHub - Your Source for Breaking News',
+    siteName: 'Pulse LS',
+    title: 'Pulse LS - Your Source for Breaking News',
     description: 'Stay informed with the latest news, in-depth analysis, and compelling stories from around the world.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NewsHub - Your Source for Breaking News',
+    title: 'Pulse LS - Your Source for Breaking News',
     description: 'Stay informed with the latest news, in-depth analysis, and compelling stories from around the world.',
-    creator: '@newshub',
+    creator: '@Pulse LS',
   },
   robots: {
     index: true,

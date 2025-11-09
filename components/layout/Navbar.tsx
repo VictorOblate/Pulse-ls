@@ -1,5 +1,6 @@
-'use client'
+"use client"
 
+import React from 'react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FiSearch, FiMenu, FiX } from 'react-icons/fi'
@@ -13,16 +14,16 @@ interface Category {
 }
 
 interface NavbarProps {
-  categories: Category[]
+  categories?: Category[]
 }
 
-export default function Navbar({ categories }: NavbarProps) {
+export default function Navbar({ categories = [] }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState<string>('')
   const router = useRouter()
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
@@ -40,7 +41,7 @@ export default function Navbar({ categories }: NavbarProps) {
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
               <div className="text-2xl font-bold text-primary-600">
-                NewsHub
+                Pulse LS
               </div>
             </Link>
 
@@ -69,7 +70,8 @@ export default function Navbar({ categories }: NavbarProps) {
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 className="p-2 hover:bg-gray-100 rounded-full transition"
-                aria-label="Search"
+                aria-label="Open search"
+                aria-expanded={isSearchOpen}
               >
                 <FiSearch className="w-5 h-5 text-gray-700" />
               </button>
@@ -78,7 +80,9 @@ export default function Navbar({ categories }: NavbarProps) {
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="md:hidden p-2 hover:bg-gray-100 rounded-full transition"
-                aria-label="Menu"
+                aria-label="Toggle menu"
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu"
               >
                 {isMenuOpen ? (
                   <FiX className="w-6 h-6 text-gray-700" />
@@ -101,8 +105,9 @@ export default function Navbar({ categories }: NavbarProps) {
                     placeholder="Search articles..."
                     className="w-full px-4 py-3 pl-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     autoFocus
+                    aria-label="Search articles"
                   />
-                  <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <FiSearch aria-hidden className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                 </div>
               </form>
             </div>
@@ -111,7 +116,7 @@ export default function Navbar({ categories }: NavbarProps) {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t bg-white">
+          <div id="mobile-menu" role="menu" className="md:hidden border-t bg-white">
             <div className="container mx-auto px-4 py-4 space-y-3">
               <Link
                 href="/"

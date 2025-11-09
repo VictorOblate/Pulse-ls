@@ -1,4 +1,4 @@
-# 🎉 NewsHub - Complete News Platform
+# 🎉 Pulse LS - Complete News Platform
 
 ## 📦 What You Have
 
@@ -50,8 +50,8 @@ Visit:
 - **Login**: http://localhost:3000/auth/signin
 
 Default credentials:
-- Admin: `admin@newshub.com` / `Admin@123`
-- Journalist: `journalist@newshub.com` / `Journalist@123`
+- Admin: `admin@Pulse LS.com` / `Admin@123`
+- Journalist: `journalist@Pulse LS.com` / `Journalist@123`
 
 ## 📚 Documentation
 
@@ -99,7 +99,7 @@ Comprehensive guides included:
 ## 🎯 Next Steps
 
 1. **Customize Branding**
-   - Change "NewsHub" to your name
+   - Change "Pulse LS" to your name
    - Update colors in `tailwind.config.js`
    - Add your logo
 

@@ -1,6 +1,6 @@
 # 🚀 Deployment Guide
 
-This guide covers deploying your NewsHub platform to production using Vercel.
+This guide covers deploying your Pulse LS platform to production using Vercel.
 
 ## Pre-Deployment Checklist
 

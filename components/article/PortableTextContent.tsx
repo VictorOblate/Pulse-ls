@@ -6,7 +6,7 @@ import { InArticleAd } from '@/components/ads/AdPlacements'
 const components: PortableTextComponents = {
   types: {
     image: ({ value }) => {
-      if (!value?.asset) return null
+      if (!value?.asset || !value.asset.url) return null
       return (
         <figure className="my-8">
           <div className="relative w-full h-auto overflow-hidden rounded-lg">

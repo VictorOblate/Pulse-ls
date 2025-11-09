@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-white">NewsHub</h3>
+            <h3 className="text-2xl font-bold text-white">Pulse LS</h3>
             <p className="text-gray-400">
               Your trusted source for breaking news, in-depth analysis, and compelling stories.
             </p>
@@ -141,7 +141,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {currentYear} NewsHub. All rights reserved.</p>
+          <p>&copy; {currentYear} Pulse LS. All rights reserved.</p>
         </div>
       </div>
     </footer>

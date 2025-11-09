@@ -1,4 +1,4 @@
-import { client, postFields } from '@/lib/sanity'
+import { client, postFields, normalizePost, debugSanityQuery } from '@/lib/sanity'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { formatDate, generateMetaTags, readingTime } from '@/lib/utils'
@@ -20,14 +20,11 @@ interface ArticlePageProps {
 
 async function getPost(slug: string) {
   try {
-    const post = await client.fetch(
-      `*[_type == "post" && slug.current == $slug][0] {
-        ${postFields}
-      }`,
-      { slug },
-      { next: { revalidate: 60 } }
-    )
-    return post
+    const query = `*[_type == "post" && slug.current == $slug][0] {
+      ${postFields}
+    }`
+    const post = await debugSanityQuery(query, { slug })
+    return normalizePost(post)
   } catch (error) {
     console.error('Error fetching post:', error)
     return null
@@ -43,7 +40,7 @@ async function getRelatedPosts(categoryId: string, currentPostId: string) {
       { categoryId, currentPostId },
       { next: { revalidate: 60 } }
     )
-    return posts
+    return (posts || []).map((p: any) => normalizePost(p)).filter(Boolean)
   } catch (error) {
     console.error('Error fetching related posts:', error)
     return []
@@ -78,7 +75,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound()
   }
 
-  const relatedPosts = await getRelatedPosts(post.category._id, post._id)
+  const relatedPosts = post?.category?._id
+    ? await getRelatedPosts(post.category._id, post._id)
+    : []
 
   // Calculate reading time
   const bodyText = post.body
@@ -88,7 +87,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const estimatedReadingTime = readingTime(bodyText)
 
   // JSON-LD Schema for SEO
-  const jsonLd = {
+    const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: post.title,
@@ -97,11 +96,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     dateModified: post.publishedAt,
     author: {
       '@type': 'Person',
-      name: post.author.name,
+      name: post.author?.name || 'Author',
     },
     publisher: {
       '@type': 'Organization',
-      name: 'NewsHub',
+      name: 'Pulse LS',
       logo: {
         '@type': 'ImageObject',
         url: `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`,
@@ -122,7 +121,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           {/* Breadcrumb */}
           <Breadcrumb
             items={[
-              { label: post.category.title, href: `/category/${post.category.slug.current}` },
+              { label: post.category?.title || 'Uncategorized', href: post.category?.slug?.current ? `/category/${post.category.slug.current}` : undefined },
               { label: post.title },
             ]}
           />
@@ -147,19 +146,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 {/* Meta Information */}
                 <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 pb-6 border-b">
                   <div className="flex items-center space-x-2">
-                    {post.author.image && (
-                      <Image
-                        src={post.author.image}
-                        alt={post.author.name}
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                      />
-                    )}
+                      {post.author?.image ? (
+                        <Image
+                          src={post.author.image}
+                          alt={post.author?.name || 'Author'}
+                          width={40}
+                          height={40}
+                          className="rounded-full"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-gray-200" />
+                      )}
                     <div>
                       <div className="flex items-center space-x-1 font-medium text-gray-900">
                         <FiUser className="w-4 h-4" />
-                        <span>{post.author.name}</span>
+                        <span>{post.author?.name || 'Author'}</span>
                       </div>
                     </div>
                   </div>
@@ -187,15 +188,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
               {/* Featured Image */}
               <figure className="mb-8 rounded-xl overflow-hidden">
-                <Image
-                  src={post.coverImage}
-                  alt={post.coverImageAlt || post.title}
-                  width={1200}
-                  height={675}
-                  className="w-full h-auto"
-                  priority
-                  sizes="(max-width: 768px) 100vw, 800px"
-                />
+                {post.coverImage ? (
+                  <Image
+                    src={post.coverImage}
+                    alt={post.coverImageAlt || post.title}
+                    width={1200}
+                    height={675}
+                    className="w-full h-auto"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 800px"
+                  />
+                ) : (
+                  <div className="w-full h-64 bg-gray-100 flex items-center justify-center text-gray-400">No image</div>
+                )}
               </figure>
 
               {/* Featured Video */}
@@ -231,18 +236,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               {post.author.bio && (
                 <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                   <div className="flex items-start space-x-4">
-                    {post.author.image && (
+                    {post.author?.image ? (
                       <Image
                         src={post.author.image}
-                        alt={post.author.name}
+                        alt={post.author?.name || 'Author'}
                         width={80}
                         height={80}
                         className="rounded-full"
                       />
+                    ) : (
+                      <div className="w-20 h-20 rounded-full bg-gray-200" />
                     )}
                     <div>
-                      <h3 className="text-xl font-bold mb-2">{post.author.name}</h3>
-                      <p className="text-gray-600">{post.author.bio}</p>
+                      <h3 className="text-xl font-bold mb-2">{post.author?.name || 'Author'}</h3>
+                      <p className="text-gray-600">{post.author?.bio}</p>
                     </div>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import { client, postFields } from '@/lib/sanity'
+import { client, postFields, normalizePost, debugSanityQuery } from '@/lib/sanity'
 import { notFound } from 'next/navigation'
 import ArticleCard from '@/components/article/ArticleCard'
 import { HeaderAd, SidebarAd } from '@/components/ads/AdPlacements'
@@ -33,14 +33,11 @@ async function getCategory(slug: string) {
 
 async function getCategoryPosts(categorySlug: string) {
   try {
-    const posts = await client.fetch(
-      `*[_type == "post" && category->slug.current == $categorySlug] | order(publishedAt desc) {
-        ${postFields}
-      }`,
-      { categorySlug },
-      { next: { revalidate: 60 } }
-    )
-    return posts
+    const query = `*[_type == "post" && category->slug.current == $categorySlug] | order(publishedAt desc) {
+      ${postFields}
+    }`
+    const posts = await debugSanityQuery(query, { categorySlug })
+    return (posts || []).map((p: any) => normalizePost(p)).filter(Boolean)
   } catch (error) {
     console.error('Error fetching category posts:', error)
     return []
@@ -60,7 +57,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     title: `${category.title} News`,
     description: category.description || `Read the latest ${category.title.toLowerCase()} news and updates`,
     openGraph: {
-      title: `${category.title} News | NewsHub`,
+      title: `${category.title} News | Pulse LS`,
       description: category.description || `Read the latest ${category.title.toLowerCase()} news and updates`,
     },
   }

@@ -1,6 +1,6 @@
 # 🚀 Detailed Setup Guide
 
-This guide walks you through setting up the NewsHub platform from scratch.
+This guide walks you through setting up the Pulse LS platform from scratch.
 
 ## Prerequisites Checklist
 
@@ -118,7 +118,7 @@ npx sanity init
 
 # Follow prompts:
 # ✓ Create new project
-# ✓ Project name: NewsHub (or your choice)
+# ✓ Project name: Pulse LS (or your choice)
 # ✓ Use default dataset: Yes
 # ✓ Output path: Already configured
 # ✓ Project template: Clean project
@@ -146,8 +146,8 @@ npm run db:push
 npm run db:seed
 
 # Expected output:
-# ✅ Admin user created: admin@newshub.com / Admin@123
-# ✅ Journalist user created: journalist@newshub.com / Journalist@123
+# ✅ Admin user created: admin@Pulse LS.com / Admin@123
+# ✅ Journalist user created: journalist@Pulse LS.com / Journalist@123
 ```
 
 ### 6. Start Development Server
@@ -198,7 +198,7 @@ World - Color: #0891b2 (cyan)
 
 1. Click "Post" in sidebar
 2. Fill in:
-   - **Title**: "Welcome to NewsHub"
+   - **Title**: "Welcome to Pulse LS"
    - **Slug**: Click "Generate" from title
    - **Excerpt**: Brief summary
    - **Cover Image**: Upload an image (required)
@@ -217,7 +217,7 @@ Check these URLs:
 - [ ] Homepage: http://localhost:3000
 - [ ] Admin: http://localhost:3000/admin
 - [ ] Sign In: http://localhost:3000/auth/signin
-- [ ] Article: http://localhost:3000/article/welcome-to-newshub
+- [ ] Article: http://localhost:3000/article/welcome-to-Pulse LS
 - [ ] Category: http://localhost:3000/category/technology
 - [ ] Search: http://localhost:3000/search?q=test
 
@@ -274,7 +274,7 @@ export function HeaderAd() {
 
 1. Go to https://analytics.google.com
 2. Admin → Create Property
-3. Property name: NewsHub
+3. Property name: Pulse LS
 4. Set timezone and currency
 5. Create property
 

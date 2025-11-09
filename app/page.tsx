@@ -1,4 +1,4 @@
-import { client, postFields } from '@/lib/sanity'
+import { client, postFields, normalizePost, debugSanityQuery } from '@/lib/sanity'
 import ArticleCard from '@/components/article/ArticleCard'
 import { HeaderAd, SidebarAd } from '@/components/ads/AdPlacements'
 import { Suspense } from 'react'
@@ -6,14 +6,11 @@ import { ArticleListSkeleton, FeaturedArticleSkeleton } from '@/components/ui/Sk
 
 async function getFeaturedPost() {
   try {
-    const post = await client.fetch(
-      `*[_type == "post" && featured == true] | order(publishedAt desc)[0] {
-        ${postFields}
-      }`,
-      {},
-      { next: { revalidate: 60 } }
-    )
-    return post
+    const query = `*[_type == "post" && featured == true] | order(publishedAt desc)[0] {
+      ${postFields}
+    }`
+    const post = await debugSanityQuery(query, {})
+    return normalizePost(post)
   } catch (error) {
     console.error('Error fetching featured post:', error)
     return null
@@ -22,14 +19,11 @@ async function getFeaturedPost() {
 
 async function getLatestPosts(limit: number = 9) {
   try {
-    const posts = await client.fetch(
-      `*[_type == "post"] | order(publishedAt desc)[0...${limit}] {
-        ${postFields}
-      }`,
-      {},
-      { next: { revalidate: 60 } }
-    )
-    return posts
+    const query = `*[_type == "post"] | order(publishedAt desc)[0...${limit}] {
+      ${postFields}
+    }`
+    const posts = await debugSanityQuery(query, {})
+    return (posts || []).map((p: any) => normalizePost(p)).filter(Boolean)
   } catch (error) {
     console.error('Error fetching latest posts:', error)
     return []
@@ -45,7 +39,7 @@ async function getCategoryPosts(categorySlug: string, limit: number = 4) {
       { categorySlug },
       { next: { revalidate: 60 } }
     )
-    return posts
+    return (posts || []).map((p: any) => normalizePost(p)).filter(Boolean)
   } catch (error) {
     console.error('Error fetching category posts:', error)
     return []

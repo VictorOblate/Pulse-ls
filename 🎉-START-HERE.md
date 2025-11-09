@@ -1,4 +1,4 @@
-# 🎉 PROJECT DELIVERED - NewsHub Platform
+# 🎉 PROJECT DELIVERED - Pulse LS Platform
 
 ## ✅ COMPLETE AND READY TO USE
 
@@ -131,8 +131,8 @@ npm run dev
 Visit http://localhost:3000
 
 **Default Login**:
-- Admin: `admin@newshub.com` / `Admin@123`
-- Journalist: `journalist@newshub.com` / `Journalist@123`
+- Admin: `admin@Pulse LS.com` / `Admin@123`
+- Journalist: `journalist@Pulse LS.com` / `Journalist@123`
 
 ---
 
@@ -176,7 +176,7 @@ news-platform/
 ## 🎯 WHAT TO DO NEXT
 
 ### 1. Customize (10 minutes)
-- Change "NewsHub" to your site name
+- Change "Pulse LS" to your site name
 - Update colors in `tailwind.config.js`
 - Modify footer links
 

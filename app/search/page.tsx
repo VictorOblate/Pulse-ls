@@ -1,4 +1,4 @@
-import { client, postFields } from '@/lib/sanity'
+import { client, postFields, normalizePost, debugSanityQuery } from '@/lib/sanity'
 import ArticleCard from '@/components/article/ArticleCard'
 import { HeaderAd } from '@/components/ads/AdPlacements'
 import { FiSearch } from 'react-icons/fi'
@@ -16,18 +16,15 @@ async function searchPosts(query: string) {
   }
 
   try {
-    const posts = await client.fetch(
-      `*[_type == "post" && (
-        title match $query + "*" ||
-        excerpt match $query + "*" ||
-        pt::text(body) match $query + "*"
-      )] | order(publishedAt desc) [0...20] {
-        ${postFields}
-      }`,
-      { query },
-      { next: { revalidate: 0 } }
-    )
-    return posts
+    const sanityQuery = `*[_type == "post" && (
+      title match $query + "*" ||
+      excerpt match $query + "*" ||
+      pt::text(body) match $query + "*"
+    )] | order(publishedAt desc) [0...20] {
+      ${postFields}
+    }`
+    const posts = await debugSanityQuery(sanityQuery, { query })
+    return (posts || []).map((p: any) => normalizePost(p)).filter(Boolean)
   } catch (error) {
     console.error('Error searching posts:', error)
     return []

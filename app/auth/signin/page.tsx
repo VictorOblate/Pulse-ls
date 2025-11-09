@@ -48,7 +48,7 @@ export default function SignInPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-block">
-              <h1 className="text-3xl font-bold text-primary-600 mb-2">NewsHub</h1>
+              <h1 className="text-3xl font-bold text-primary-600 mb-2">Pulse LS</h1>
             </Link>
             <h2 className="text-2xl font-bold text-gray-900">Sign In</h2>
             <p className="mt-2 text-sm text-gray-600">
@@ -125,7 +125,7 @@ export default function SignInPage() {
               href="/"
               className="text-sm text-primary-600 hover:text-primary-700 font-medium"
             >
-              ← Back to NewsHub
+              ← Back to Pulse LS
             </Link>
           </div>
         </div>

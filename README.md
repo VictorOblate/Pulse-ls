@@ -1,4 +1,4 @@
-# 📰 NewsHub - Modern News Platform
+# 📰 Pulse LS - Modern News Platform
 
 A modern, fast news publishing platform built with Next.js 14, Sanity CMS, and Google AdSense integration.
 
@@ -101,8 +101,8 @@ npm run db:push
 npm run db:seed
 
 # This creates:
-# Admin: admin@newshub.com / Admin@123
-# Journalist: journalist@newshub.com / Journalist@123
+# Admin: admin@Pulse LS.com / Admin@123
+# Journalist: journalist@Pulse LS.com / Journalist@123
 ```
 
 ### 5. Run Development Server
@@ -241,12 +241,12 @@ Analytics will automatically track:
 ### Default Users (After Seeding)
 
 **Admin**
-- Email: `admin@newshub.com`
+- Email: `admin@Pulse LS.com`
 - Password: `Admin@123`
 - Role: Full access to everything
 
 **Journalist**
-- Email: `journalist@newshub.com`
+- Email: `journalist@Pulse LS.com`
 - Password: `Journalist@123`
 - Role: Content creation and editing
 
@@ -304,7 +304,7 @@ Update `DATABASE_URL` in Vercel environment variables.
 
 ### Branding
 
-1. **Logo**: Update "NewsHub" in `/components/layout/Navbar.tsx`
+1. **Logo**: Update "Pulse LS" in `/components/layout/Navbar.tsx`
 2. **Colors**: Edit `/tailwind.config.js` theme colors
 3. **Fonts**: Change in `/app/layout.tsx`
 
