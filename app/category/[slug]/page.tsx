@@ -33,7 +33,7 @@ async function getCategory(slug: string) {
 
 async function getCategoryPosts(categorySlug: string) {
   try {
-    const query = `*[_type == "post" && category->slug.current == $categorySlug] | order(publishedAt desc) {
+    const query = `*[_type == "post" && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {
       ${postFields}
     }`
     const posts = await debugSanityQuery(query, { categorySlug })

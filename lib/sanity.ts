@@ -22,7 +22,7 @@ export const postFields = `
   excerpt,
   "coverImage": coalesce(mainImage.asset->url, coverImage.asset->url),
   "coverImageAlt": coalesce(mainImage.alt, coverImage.alt),
-  "category": category->{
+  "categories": categories[]->{
     _id,
     title,
     slug,
@@ -83,13 +83,8 @@ export function normalizePost(post: any) {
     bio: post.author?.bio || null,
   }
 
-  const category = post.category
-    ? {
-        _id: post.category._id || post.category._ref || null,
-        title: post.category.title || null,
-        slug: { current: post.category.slug?.current || (post.category.slug || null) },
-        color: post.category.color || null,
-      }
+  const firstCategory = Array.isArray(post.categories) && post.categories.length > 0
+    ? post.categories[0]
     : null
 
   return {
@@ -97,7 +92,7 @@ export function normalizePost(post: any) {
     coverImage,
     excerpt,
     author,
-    category,
+    category: firstCategory,
     body: Array.isArray(post.body) ? post.body : [],
   }
 }

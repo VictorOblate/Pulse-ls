@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer'
 import { MobileStickyAd } from '@/components/ads/AdPlacements'
 import { client } from '@/lib/sanity'
 import Script from 'next/script'
+import GeometricBackground from '@/components/layout/GeometricBackground'
 import './globals.css'
 
 const inter = Inter({
@@ -120,11 +121,12 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SessionProvider session={session}>
           <div className="flex flex-col min-h-screen">
+            <GeometricBackground />
             <Navbar categories={categories} />
             <main className="flex-grow">
               {children}
             </main>
-            <Footer />
+            <Footer categories={categories} />
             <MobileStickyAd />
           </div>
         </SessionProvider>

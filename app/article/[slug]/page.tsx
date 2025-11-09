@@ -34,7 +34,7 @@ async function getPost(slug: string) {
 async function getRelatedPosts(categoryId: string, currentPostId: string) {
   try {
     const posts = await client.fetch(
-      `*[_type == "post" && category._ref == $categoryId && _id != $currentPostId] | order(publishedAt desc)[0...3] {
+      `*[_type == "post" && $categoryId in categories[]._ref && _id != $currentPostId] | order(publishedAt desc)[0...3] {
         ${postFields}
       }`,
       { categoryId, currentPostId },
@@ -249,7 +249,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     )}
                     <div>
                       <h3 className="text-xl font-bold mb-2">{post.author?.name || 'Author'}</h3>
-                      <p className="text-gray-600">{post.author?.bio}</p>
+                      <div className="text-gray-600">
+                        <PortableTextContent value={post.author?.bio} insertAds={false} />
+                      </div>
                     </div>
                   </div>
                 </div>
